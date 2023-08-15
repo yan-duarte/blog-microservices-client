@@ -3,10 +3,14 @@ import axios from 'axios'
 import CommentCreate from './CommentCreate'
 import CommentList from './CommentList'
 
-interface Posts {
+export interface Posts {
   [id: string]: {
     id: string
     title: string
+    comments: {
+      id: string
+      content: string
+    }[]
   }
 }
 
@@ -14,7 +18,7 @@ const PostList = (): JSX.Element => {
   const [posts, setPosts] = useState<Posts>({})
 
   const fetchPosts = async () => {
-    const { data } = await axios.get<Posts>('http://localhost:4000/posts')
+    const { data } = await axios.get<Posts>('http://localhost:4002/posts')
 
     setPosts(data)
   }
@@ -29,7 +33,7 @@ const PostList = (): JSX.Element => {
 
         <div className='card-body'>
           <h3>{post.title}</h3>
-          <CommentList postId={post.id} />
+          <CommentList comments={post.comments} />
           <CommentCreate postId={post.id} />
         </div>
       </div>
