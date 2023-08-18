@@ -10,6 +10,7 @@ export interface Posts {
     comments: {
       id: string
       content: string
+      status: "pending" | "approved" | "rejected";
     }[]
   }
 }
